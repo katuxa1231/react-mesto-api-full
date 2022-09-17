@@ -17,12 +17,8 @@ const { PORT = 3000 } = process.env;
 
 const options = {
   origin: [
-    'localhost:3200',
     'http://localhost:3200',
-    'https://localhost:3200',
-    'mesto1231.nomoredomains.sbs',
     'https://mesto1231.nomoredomains.sbs',
-    'https://api.mesto1231.nomoredomains.sbs',
     'https://katuxa1231.github.io',
   ],
   methods: ['GET', 'HEAD', 'PUT', 'PATCH', 'POST', 'DELETE'],
@@ -33,7 +29,7 @@ const options = {
 };
 
 const app = express();
-app.use('*', cors(options));
+app.use(cors(options));
 mongoose.connect('mongodb://localhost:27017/mestodb', {
   useNewUrlParser: true,
   useUnifiedTopology: true,
