@@ -33,11 +33,16 @@ mongoose.connect('mongodb://localhost:27017/mestodb', {
   useNewUrlParser: true,
   useUnifiedTopology: true,
 });
-app.use('*', cors(options));
 app.use(helmet());
 app.use(cookieParser());
 app.use(bodyParser.json());
 app.use(requestLogger);
+app.use('*', cors(options));
+app.get('/crash-test', () => {
+  setTimeout(() => {
+    throw new Error('Сервер сейчас упадёт');
+  }, 0);
+});
 app.post('/signin', celebrate({
   body: {
     email: validationModel.user.email,
