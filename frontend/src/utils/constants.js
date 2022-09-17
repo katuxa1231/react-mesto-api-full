@@ -15,3 +15,5 @@ export const tooltipMessage = {
     [TooltipType.failure]: 'Что-то пошло не так! Попробуйте ещё раз.'
   }
 }
+
+export const BASE_URL = 'https://api.mesto1231.nomoredomains.sbs';

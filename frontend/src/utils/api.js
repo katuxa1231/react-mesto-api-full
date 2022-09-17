@@ -1,3 +1,5 @@
+import { BASE_URL } from './constants';
+
 class Api {
   constructor(options) {
     this._baseUrl = options.baseUrl;
@@ -82,7 +84,7 @@ class Api {
 }
 
 export const api = new Api({
-  baseUrl: 'http://localhost:3000'/*'https://api.mesto1231.nomoredomains.sbs'*/,
+  baseUrl: BASE_URL,
   headers: {
     // authorization: '4bb64700-9f18-42f4-ba6b-cae0ce94f4a2',
     'Content-Type': 'application/json',

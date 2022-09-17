@@ -1,7 +1,8 @@
 {
   "name": "react-mesto-auth",
   "version": "0.1.0",
-  "homepage": "https://katuxa1231.github.io/react-mesto-auth/",
+  "homepage": ".",
+  "proxy": "https://localhost:3200",
   "private": true,
   "dependencies": {
     "@testing-library/jest-dom": "^5.16.4",
@@ -14,12 +15,12 @@
     "web-vitals": "^2.1.4"
   },
   "scripts": {
-    "start": "cross-env PORT=3200 react-scripts start",
+    "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "predeploy": "npm run build",
-    "deploy": "gh-pages -d build"
+    "deploy": "scp -r ./build katuxa1231@51.250.105.230:/home/katuxa1231/react-mesto-api-full/frontend"
   },
   "eslintConfig": {
     "extends": [

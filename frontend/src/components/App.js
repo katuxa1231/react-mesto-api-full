@@ -30,17 +30,16 @@ function App() {
 
   useEffect(() => {
     if (loggedIn) {
-      Promise.all([api.getInitialCards(), api.getUserInfo()])
-        .then(([cardsRes, userRes]) => {
+      api.getInitialCards()
+        .then((cardsRes) => {
           setCards(cardsRes.data)
-          setCurrentUser(userRes.data)
         })
         .catch((err) => console.log(`Error: ${err}`))
     }
   }, [loggedIn])
 
   useEffect(() => {
-    auth.getUser()
+    api.getUserInfo()
       .then((res) => {
         if (res) {
           setCurrentUser(res.data)
