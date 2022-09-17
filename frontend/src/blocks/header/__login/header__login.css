@@ -1,0 +1,16 @@
+.header__login {
+  font-family: 'Inter', Helvetica, sans-serif;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 17px;
+  color: #FFFFFF;
+  margin: 0;
+}
+
+@media screen and (min-width: 1024px) {
+  .header__login {
+    font-size: 18px;
+    line-height: 22px;
+  }
+}

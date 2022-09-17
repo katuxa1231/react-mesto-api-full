@@ -1,0 +1,13 @@
+.form__input-wrapper_compact {
+    min-height: 60px;
+}
+
+.form__input-wrapper_compact:first-child {
+    margin-top: 40px;
+}
+
+@media screen and (min-width: 1024px) {
+    .form__input-wrapper_compact:first-child {
+        margin-top: 50px;
+    }
+}

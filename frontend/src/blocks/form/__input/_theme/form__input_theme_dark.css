@@ -1,0 +1,9 @@
+.form__input_theme_dark {
+    background-color: #000;
+    border-bottom: 1px solid #fff;
+    color: #fff;
+
+}
+.form__input_theme_dark::placeholder {
+    color: #ccc;
+}

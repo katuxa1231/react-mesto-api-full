@@ -1,0 +1,12 @@
+.profile__wrap {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 8px;
+}
+
+@media screen and (min-width: 1024px) {
+  .profile__wrap {
+    margin-bottom: 16px;
+  }
+}
