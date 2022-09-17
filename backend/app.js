@@ -4,6 +4,7 @@ const bodyParser = require('body-parser');
 const helmet = require('helmet');
 const { celebrate, errors } = require('celebrate');
 const cookieParser = require('cookie-parser');
+const cors = require('cors');
 const { StatusCode } = require('./constants/api');
 const { login, createUser } = require('./controllers/users');
 const { auth } = require('./midlewares/auth');
@@ -13,11 +14,25 @@ const { validationModel } = require('./constants/validation');
 
 const { PORT = 3000 } = process.env;
 
+const options = {
+  origin: [
+    'http://localhost:3200',
+    'https://mesto1231.nomoredomains.sbs',
+    'https://katuxa1231.github.io',
+  ],
+  methods: ['GET', 'HEAD', 'PUT', 'PATCH', 'POST', 'DELETE'],
+  preflightContinue: false,
+  optionsSuccessStatus: 204,
+  allowedHeaders: ['Content-Type', 'origin', 'Authorization'],
+  credentials: true,
+};
+
 const app = express();
 mongoose.connect('mongodb://localhost:27017/mestodb', {
   useNewUrlParser: true,
   useUnifiedTopology: true,
 });
+app.use('*', cors(options));
 app.use(helmet());
 app.use(cookieParser());
 app.use(bodyParser.json());

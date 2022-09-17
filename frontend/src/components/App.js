@@ -31,36 +31,30 @@ function App() {
   useEffect(() => {
     if (loggedIn) {
       Promise.all([api.getInitialCards(), api.getUserInfo()])
-        .then(([cards, userData]) => {
-          setCards(cards)
-          setCurrentUser({ ...userData, email: currentUser.email })
+        .then(([cardsRes, userRes]) => {
+          setCards(cardsRes.data)
+          setCurrentUser(userRes.data)
         })
         .catch((err) => console.log(`Error: ${err}`))
     }
   }, [loggedIn])
 
   useEffect(() => {
-    const token = localStorage.getItem('token')
-    if (token) {
-      auth.getUser(token)
-        .then((res) => {
-          if (res) {
-            setCurrentUser({ email: res.data.email })
-            setLoggedIn(true)
-            history.push('/')
-          }
-        })
-        .catch((err) => console.log(`Error: ${err.status}`))
-    }
+    auth.getUser()
+      .then((res) => {
+        if (res) {
+          setCurrentUser(res.data)
+          setLoggedIn(true)
+          history.push('/')
+        }
+      })
+      .catch((err) => console.log(`Error: ${err.status}`))
   }, [])
 
   function handleLogin(email, password) {
     auth.logIn(email, password)
-      .then((data) => {
-        if (data) {
-          localStorage.setItem('token', data.token)
-        }
-        setCurrentUser({ email })
+      .then((user) => {
+        setCurrentUser(user.data)
         setLoggedIn(true)
         history.push('/')
       })
@@ -103,7 +97,7 @@ function App() {
   }
 
   function closeTooltip() {
-    setTooltipParams({...tooltipParams, isOpen: false})
+    setTooltipParams({ ...tooltipParams, isOpen: false })
   }
 
   function handleLogout() {
@@ -118,8 +112,8 @@ function App() {
   function handleUpdateUser(name, about) {
     setLoadingStatus(true)
     api.updateUserInfo(name, about)
-      .then(userInfo => {
-        setCurrentUser(userInfo)
+      .then(userRes => {
+        setCurrentUser(userRes.data)
         closeAllPopups()
       })
       .catch((err) => console.log(`Error: ${err}`))
@@ -129,8 +123,8 @@ function App() {
   function handleUpdateAvatar(avatar) {
     setLoadingStatus(true)
     api.updateUserAvatar(avatar)
-      .then(userInfo => {
-        setCurrentUser(userInfo)
+      .then(userRes => {
+        setCurrentUser(userRes.data)
         closeAllPopups()
       })
       .catch((err) => console.log(`Error: ${err}`))
@@ -138,11 +132,11 @@ function App() {
   }
 
   function handleCardLike(card) {
-    const isLiked = card.likes.some(item => item._id === currentUser._id)
+    const isLiked = card.likes.some(item => item === currentUser._id)
 
     api.toggleLike(card._id, isLiked)
       .then((newCard) => {
-        setCards((state) => state.map((item) => item._id === card._id ? newCard : item))
+        setCards((state) => state.map((item) => item._id === card._id ? newCard.data : item))
       })
       .catch((err) => console.log(`Error: ${err}`))
   }
@@ -159,7 +153,7 @@ function App() {
     setLoadingStatus(true)
     api.addCard(name, link)
       .then((newCard) => {
-        setCards([newCard, ...cards])
+        setCards([newCard.data, ...cards])
         closeAllPopups()
       })
       .catch((err) => console.log(`Error: ${err}`))
@@ -167,7 +161,7 @@ function App() {
   }
 
   function openTooltip(type, message) {
-    setTooltipParams({isOpen: true, type: type, message: message})
+    setTooltipParams({ isOpen: true, type: type, message: message })
   }
 
   return (
@@ -209,7 +203,7 @@ function App() {
         <EditAvatarPopup isOpen={isEditAvatarPopupOpen} onClose={closeAllPopups} onUpdateAvatar={handleUpdateAvatar}
                          isLoading={isLoading}/>
         <ImagePopup card={selectedCard} handleCloseButtonClick={closeAllPopups}/>
-        <InfoTooltip params={tooltipParams} handleCloseButtonClick={closeTooltip} />
+        <InfoTooltip params={tooltipParams} handleCloseButtonClick={closeTooltip}/>
       </div>
     </CurrentUserContext.Provider>
   )

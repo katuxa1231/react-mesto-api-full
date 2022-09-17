@@ -21,10 +21,10 @@ export function Header({ loggedIn, handleLogout }) {
           </div>)
         : (<Switch>
             <Route path={AppRoute.login}>
-              <Link to={AppRoute.registration}>Зарегистрироваться</Link>
+              <Link className='header__link' to={AppRoute.registration}>Зарегистрироваться</Link>
             </Route>
             <Route path={AppRoute.registration}>
-              <Link to={AppRoute.login}>Войти</Link>
+              <Link className='header__link' to={AppRoute.login}>Войти</Link>
             </Route>
           </Switch>)}
     </header>

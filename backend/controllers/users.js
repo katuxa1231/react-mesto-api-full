@@ -21,7 +21,7 @@ module.exports.login = (req, res, next) => {
 };
 
 module.exports.getCurrentUser = (req, res, next) => {
-  User.find({ _id: req.user._id })
+  User.findOne({ _id: req.user._id })
     .then((user) => res.send({ data: user }))
     .catch(next);
 };
@@ -60,7 +60,7 @@ module.exports.createUser = (req, res, next) => {
 module.exports.updateUserInfo = (req, res, next) => {
   const { name, about } = req.body;
 
-  User.findByIdAndUpdate(req.user._id, { name, about }, { new: true, runValidators: true })
+  User.findOneAndUpdate(req.user._id, { name, about }, { new: true, runValidators: true })
     .then((user) => res.send({ data: user }))
     .catch(next);
 };
@@ -68,7 +68,7 @@ module.exports.updateUserInfo = (req, res, next) => {
 module.exports.updateUserAvatar = (req, res, next) => {
   const { avatar } = req.body;
 
-  User.findByIdAndUpdate(req.user._id, { avatar }, { new: true, runValidators: true })
+  User.findOneAndUpdate(req.user._id, { avatar }, { new: true, runValidators: true })
     .then((user) => res.send({ data: user }))
     .catch(next);
 };

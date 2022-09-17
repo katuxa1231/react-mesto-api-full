@@ -5,7 +5,7 @@ const BadRequest = require('../errors/bad-request');
 const Forbidden = require('../errors/forbidden');
 
 module.exports.getCards = (req, res, next) => {
-  Card.find({})
+  Card.find({}).sort({ createAt: -1 })
     .then((cards) => res.send({ data: cards }))
     .catch(next);
 };
