@@ -13,7 +13,7 @@ const { validationModel } = require('./constants/validation');
 const { cors } = require('./midlewares/cors');
 require('dotenv').config();
 
-const { PORT = 3000 } = process.env;
+const { PORT = 3200 } = process.env;
 
 const app = express();
 app.use(cors);
