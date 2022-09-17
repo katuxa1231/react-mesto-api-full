@@ -5,7 +5,7 @@
   "main": "app.js",
   "scripts": {
     "start": "cross-env node app.js",
-    "dev": "cross-env nodemon app.js",
+    "dev": "cross-env NODE_ENV=development nodemon app.js",
     "lint": "npx eslint ./"
   },
   "repository": {
