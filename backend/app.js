@@ -5,12 +5,12 @@ const helmet = require('helmet');
 const { celebrate, errors } = require('celebrate');
 const cookieParser = require('cookie-parser');
 const cors = require('cors');
-const { StatusCode } = require('./constants/api');
 const { login, createUser } = require('./controllers/users');
 const { auth } = require('./midlewares/auth');
 const { handleError } = require('./midlewares/error');
 const { requestLogger, errorLogger } = require('./midlewares/logger');
 const { validationModel } = require('./constants/validation');
+const NotFound = require('./errors/not-found');
 require('dotenv').config();
 
 const { PORT = 3200 } = process.env;
@@ -57,8 +57,8 @@ app.use(auth);
 app.use('/users', require('./routes/users'));
 app.use('/cards', require('./routes/cards'));
 
-app.use('/*', (req, res) => {
-  res.status(StatusCode.NOT_FOUND).send({ message: 'Путь не существует' });
+app.use('/*', () => {
+  throw new NotFound('Путь не существует');
 });
 app.use(errorLogger);
 app.use(errors());
