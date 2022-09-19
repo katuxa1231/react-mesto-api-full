@@ -5,7 +5,7 @@ const helmet = require('helmet');
 const { celebrate, errors } = require('celebrate');
 const cookieParser = require('cookie-parser');
 const cors = require('cors');
-const { login, createUser } = require('./controllers/users');
+const { login, createUser, logout } = require('./controllers/users');
 const { auth } = require('./midlewares/auth');
 const { handleError } = require('./midlewares/error');
 const { requestLogger, errorLogger } = require('./midlewares/logger');
@@ -53,6 +53,7 @@ app.post('/signin', celebrate({
 app.post('/signup', celebrate({
   body: validationModel.user,
 }), createUser);
+app.post('/logout', logout);
 app.use(auth);
 app.use('/users', require('./routes/users'));
 app.use('/cards', require('./routes/cards'));

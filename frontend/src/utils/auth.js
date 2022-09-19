@@ -12,7 +12,7 @@ export const register = (email, password) => {
     })
 }
 
-export const logIn = (email, password) => {
+export const login = (email, password) => {
   return fetch(`${BASE_URL}/signin`, {
     method: 'POST',
     headers: {
@@ -20,6 +20,19 @@ export const logIn = (email, password) => {
     },
     credentials: 'include',
     body: JSON.stringify({ email, password })
+  })
+    .then((res) => {
+      return checkResponse(res)
+    })
+}
+
+export const logout = () => {
+  return fetch(`${BASE_URL}/logout`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    credentials: 'include'
   })
     .then((res) => {
       return checkResponse(res)

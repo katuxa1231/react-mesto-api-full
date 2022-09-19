@@ -3,7 +3,7 @@ const jwt = require('jsonwebtoken');
 const User = require('../models/user');
 const { errorMessage, StatusCode } = require('../constants/api');
 const NotFound = require('../errors/not-found');
-const { DEV_SECRET } = require('../constants/keys');
+const { DEV_SECRET, COOKIE_KEY_NAME } = require('../constants/keys');
 require('dotenv').config();
 
 const { NODE_ENV, JWT_SECRET } = process.env;
@@ -16,17 +16,21 @@ module.exports.login = (req, res, next) => {
     .then((user) => {
       const token = jwt.sign(
         { _id: user._id },
-         isProd ? JWT_SECRET : DEV_SECRET,
+        isProd ? JWT_SECRET : DEV_SECRET,
         { expiresIn: '7d' },
       );
-      res.cookie('token', token, {
+      res.cookie(COOKIE_KEY_NAME, token, {
         maxAge: 3600000 * 24 * 7,
         httpOnly: true,
-        sameSite: 'None',
-        secure: isProd
+        sameSite: isProd ? 'None' : true,
+        secure: isProd,
       }).send({ data: user });
     })
     .catch(next);
+};
+
+module.exports.logout = (req, res) => {
+  res.clearCookie(COOKIE_KEY_NAME).send({ status: 'Successful' });
 };
 
 module.exports.getCurrentUser = (req, res, next) => {

@@ -51,7 +51,7 @@ function App() {
   }, [])
 
   function handleLogin(email, password) {
-    auth.logIn(email, password)
+    auth.login(email, password)
       .then((user) => {
         setCurrentUser(user.data)
         setLoggedIn(true)
@@ -100,8 +100,9 @@ function App() {
   }
 
   function handleLogout() {
-    localStorage.setItem('token', '')
-    setLoggedIn(false)
+    auth.logout().then(() => {
+      setLoggedIn(false);
+    })
   }
 
   function handleCardClick(card) {
