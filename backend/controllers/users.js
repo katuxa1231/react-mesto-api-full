@@ -4,6 +4,7 @@ const User = require('../models/user');
 const { errorMessage, StatusCode } = require('../constants/api');
 const NotFound = require('../errors/not-found');
 const { DEV_SECRET } = require('../constants/keys');
+require('dotenv').config();
 
 const { NODE_ENV, JWT_SECRET } = process.env;
 
