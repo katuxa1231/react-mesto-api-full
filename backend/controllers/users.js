@@ -7,10 +7,10 @@ const { DEV_SECRET, COOKIE_KEY_NAME } = require('../constants/keys');
 require('dotenv').config();
 
 const { NODE_ENV, JWT_SECRET } = process.env;
+const isProd = NODE_ENV === 'production';
 
 module.exports.login = (req, res, next) => {
   const { email, password } = req.body;
-  const isProd = NODE_ENV === 'production';
 
   User.findUserByCredentials(email, password)
     .then((user) => {
@@ -30,7 +30,10 @@ module.exports.login = (req, res, next) => {
 };
 
 module.exports.logout = (req, res) => {
-  res.clearCookie(COOKIE_KEY_NAME).send({ status: 'Successful' });
+  res.clearCookie(COOKIE_KEY_NAME, {
+    sameSite: isProd ? 'None' : true,
+    secure: isProd,
+  }).send({ status: 'Successful' });
 };
 
 module.exports.getCurrentUser = (req, res, next) => {
