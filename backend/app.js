@@ -18,6 +18,7 @@ const { PORT = 3200 } = process.env;
 const options = {
   origin: [
     'http://localhost:3000',
+    'http://mesto1231.nomoredomains.sbs',
     'https://mesto1231.nomoredomains.sbs',
     'https://katuxa1231.github.io',
   ],
